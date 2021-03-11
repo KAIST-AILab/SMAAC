@@ -1,0 +1,7 @@
+__pycache__
+
+lightsim2grid
+result/
+
+data/l2rpn_case14_sandbox*
+data/l2rpn_wcci_2020
