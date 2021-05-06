@@ -6,10 +6,9 @@ from datetime import datetime
 from argparse import ArgumentParser
 import numpy as np
 import torch
-from lightsim2grid import LightSimBackend 
-from grid2op import make
+import grid2op
+from lightsim2grid import LightSimBackend
 from grid2op.Reward import L2RPNSandBoxScore
-# from lightsim2grid.LightSimBackend import LightSimBackend
 from custom_reward import *
 from agent import Agent
 from train import TrainAgent
@@ -95,18 +94,6 @@ def read_ffw_json(path, chronics, case):
             if i >= 2880: break
     return res
 
-def read_loss_json(path, chronics):
-    losses = {}
-    loads = {}
-    chronics = list(set(chronics))
-    for i in chronics:
-        json_path = os.path.join(path, f'{i}.json')
-        with open(json_path, 'r', encoding='utf-8') as f:
-            res = json.load(f)
-        losses[i] = res['losses']
-        loads[i] = res['sum_loads']
-    return losses, loads
-
 def seed_everything(seed_value):
     random.seed(seed_value)
     np.random.seed(seed_value)
@@ -153,9 +140,9 @@ if __name__ == '__main__':
             with open(os.path.join(dn_json_path, f'{i}.json'), 'r', encoding='utf-8') as f:
                 ep_infos[i] = json.load(f)
 
-    env = make(env_path, test=True, reward_class=L2RPNSandBoxScore, backend=LightSimBackend(),
+    env = grid2op.make(env_path, test=True, reward_class=L2RPNSandBoxScore, backend=LightSimBackend(),
                 other_rewards={'loss': LossReward})
-    test_env = make(env_path, test=True, reward_class=L2RPNSandBoxScore, backend=LightSimBackend(),
+    test_env = grid2op.make(env_path, test=True, reward_class=L2RPNSandBoxScore, backend=LightSimBackend(),
                 other_rewards={'loss': LossReward})
     env.deactivate_forecast()
     test_env.deactivate_forecast()

@@ -1,7 +1,8 @@
 __pycache__
 
 lightsim2grid
-result/
+result/*
+!result/example
 
 data/l2rpn_case14_sandbox*
 data/l2rpn_wcci_2020

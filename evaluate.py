@@ -6,8 +6,8 @@ from datetime import datetime
 from argparse import ArgumentParser
 import numpy as np
 import torch
-import lightsim2grid.LightSimBackend as LightSimBackend
-from grid2op import make
+import grid2op
+from lightsim2grid import LightSimBackend
 from grid2op.Reward import L2RPNSandBoxScore
 from custom_reward import *
 from agent import Agent
@@ -126,7 +126,7 @@ if __name__ == '__main__':
 
     mode = 'last' if args.last else 'best'
 
-    env = make(env_path, test=True, reward_class=L2RPNSandBoxScore, backend=LightSimBackend(),
+    env = grid2op.make(env_path, test=True, reward_class=L2RPNSandBoxScore, backend=LightSimBackend(),
                 other_rewards={'loss': LossReward})
     env.deactivate_forecast()
     env.parameters.NB_TIMESTEP_OVERFLOW_ALLOWED = 3

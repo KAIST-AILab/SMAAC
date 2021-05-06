@@ -50,6 +50,9 @@ python evaluate.py -n=[experiment_dirname] -c=[environment_name]
 
 # Example
 python evaluate.py -n=wcci_run_0 -c=wcci
+
+# If you want to evaluate an example trained model on WCCI, execute as below
+python evaluate.py -n=example
 ```
 
 ## References
